@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Laura 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de fundo animado */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Gradiente de overlay */
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.8) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Partículas de luz */
+        .light-particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 182, 217, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(2px);
+            animation: float-particles 20s infinite;
+        }
+
+        @keyframes float-particles {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* Container principal */
+        .container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 80px 60px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 
+                0 60px 120px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+                0 0 100px rgba(255, 182, 217, 0.4);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: fadeInScale 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(40px);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Brilho orbital */
+        .orbital-glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, 
+                #ff6b9d, 
+                #c06c84, 
+                #f67280, 
+                #ff6b9d);
+            background-size: 300% 300%;
+            animation: gradient-rotate 8s linear infinite;
+            opacity: 0.5;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        @keyframes gradient-rotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ilustração SVG animada */
+        .illustration-container {
+            margin-bottom: 40px;
+            position: relative;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cute-icon {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            animation: float-icon 5s ease-in-out infinite;
+        }
+
+        @keyframes float-icon {
+            0%, 100% {
+                transform: translateY(0px) rotate(-3deg);
+            }
+            50% {
+                transform: translateY(-25px) rotate(3deg);
+            }
+        }
+
+        /* Círculos decorativos ao redor */
+        .decoration-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 182, 217, 0.3);
+            animation: pulse-circle 4s ease-in-out infinite;
+        }
+
+        .decoration-circle:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            animation-delay: 0s;
+        }
+
+        .decoration-circle:nth-child(2) {
+            width: 280px;
+            height: 280px;
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse-circle {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            color: rgba(255, 182, 217, 0.8);
+            font-size: 25px;
+            animation: sparkle-twinkle 3s ease-in-out infinite;
+        }
+
+        .sparkle:nth-child(3) { top: 10%; left: 20%; animation-delay: 0s; }
+        .sparkle:nth-child(4) { top: 15%; right: 25%; animation-delay: 0.5s; }
+        .sparkle:nth-child(5) { bottom: 20%; left: 15%; animation-delay: 1s; }
+        .sparkle:nth-child(6) { bottom: 15%; right: 20%; animation-delay: 1.5s; }
+
+        @keyframes sparkle-twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2) rotate(180deg);
+            }
+        }
+
+        /* Título */
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #ffffff, #ffb6d9, #ffd4e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            animation: gradient-shift 4s ease infinite;
+            background-size: 200% 200%;
+            text-shadow: 0 0 40px rgba(255, 182, 217, 0.5);
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Subtítulo */
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1em;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            animation: fadeIn 2s ease-out 0.5s backwards;
+        }
+
+        /* Linha decorativa animada */
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
+            margin: 0 auto 50px;
+            position: relative;
+            animation: expand-divider 2s ease-out;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff6b9d;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .divider::before { left: -15px; }
+        .divider::after { right: -15px; }
+
+        @keyframes expand-divider {
+            0% { width: 0; opacity: 0; }
+            100% { width: 100px; opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+            50% { transform: translateY(-50%) scale(1.5); opacity: 0.5; }
+        }
+
+        /* Mensagem */
+        .message {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.5em;
+            line-height: 2.2;
+            margin: 50px 0;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .message p {
+            margin: 25px 0;
+            animation: fadeInUp 1.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .message p:nth-child(1) { animation-delay: 0.3s; }
+        .message p:nth-child(2) { animation-delay: 0.5s; }
+        .message p:nth-child(3) { animation-delay: 0.7s; }
+        .message p:nth-child(4) { animation-delay: 0.9s; }
+        .message p:nth-child(5) { animation-delay: 1.1s; }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ff6b9d, #ffd4e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+            font-style: italic;
+            position: relative;
+        }
+
+        /* Corações flutuantes melhorados */
+        .hearts-container {
+            margin: 60px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .heart-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .heart {
+            font-size: 50px;
+            display: inline-block;
+            animation: float-heart 4s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(255, 107, 157, 0.4));
+        }
+
+        .heart:nth-child(1) { animation-delay: 0s; }
+        .heart:nth-child(2) { animation-delay: 0.7s; }
+        .heart:nth-child(3) { animation-delay: 1.4s; }
+
+        @keyframes float-heart {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-30px) scale(1.15);
+            }
+        }
+
+        /* Footer elegante */
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff, #ffb6d9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-out 1.5s backwards;
+        }
+
+        .moon-stars {
+            font-size: 45px;
+            margin-top: 20px;
+            animation: twinkle 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .container {
+                padding: 50px 35px;
+                border-radius: 35px;
+            }
+            
+            h1 {
+                font-size: 3em;
+                letter-spacing: 1px;
+            }
+            
+            .message {
+                font-size: 1.2em;
+                line-height: 2;
+            }
+            
+            .cute-icon {
+                width: 120px;
+                height: 120px;
+            }
+
+            .illustration-container {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .message {
+                font-size: 1.1em;
+            }
+
+            .container {
+                padding: 40px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas animado -->
+    <canvas id="canvas"></canvas>
+    <div class="gradient-overlay"></div>
+
+    <div class="container">
+        <div class="orbital-glow"></div>
+        
+        <div class="content">
+            <div class="illustration-container">
+                <div class="decoration-circle"></div>
+                <div class="decoration-circle"></div>
+                
+                <svg class="cute-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Urso fofo com detalhes extras -->
+                    <defs>
+                        <linearGradient id="bearGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffcce0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffe0f0;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="earGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffb6d9;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffd4e5;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="softGlow">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Orelha esquerda -->
+                    <circle cx="60" cy="60" r="28" fill="url(#earGradient)" filter="url(#glow)">
+                        <animate attributeName="cy" values="60;55;60" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="60" cy="60" r="18" fill="#fff5f8" opacity="0.6">
+                        <animate attributeName="cy" values="60;55;60" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    
+                    <!-- Orelha direita -->
+                    <circle cx="140" cy="60" r="28" fill="url(#earGradient)" filter="url(#glow)">
+                        <animate attributeName="cy" values="60;55;60" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                    </circle>
+                    <circle cx="140" cy="60" r="18" fill="#fff5f8" opacity="0.6">
+                        <animate attributeName="cy" values="60;55;60" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                    </circle>
+                    
+                    <!-- Cabeça -->
+                    <circle cx="100" cy="100" r="65" fill="url(#bearGradient)" filter="url(#glow)"/>
+                    
+                    <!-- Focinho -->
+                    <ellipse cx="100" cy="120" rx="40" ry="30" fill="#ffffff" opacity="0.95" filter="url(#softGlow)">
+                        <animate attributeName="ry" values="30;32;30" dur="4s" repeatCount="indefinite"/>
+                    </ellipse>
+                    
+                    <!-- Nariz em forma de coração -->
+                    <path d="M 100 115 
+                             C 95 115, 92 112, 92 108
+                             C 92 104, 95 101, 100 104
+                             C 105 101, 108 104, 108 108
+                             C 108 112, 105 115, 100 115 Z" 
+                          fill="#ff6b9d" filter="url(#softGlow)">
+                        <animate attributeName="d" 
+                                 values="M 100 115 C 95 115, 92 112, 92 108 C 92 104, 95 101, 100 104 C 105 101, 108 104, 108 108 C 108 112, 105 115, 100 115 Z;
+                                         M 100 116 C 95 116, 92 113, 92 109 C 92 105, 95 102, 100 105 C 105 102, 108 105, 108 109 C 108 113, 105 116, 100 116 Z;
+                                         M 100 115 C 95 115, 92 112, 92 108 C 92 104, 95 101, 100 104 C 105 101, 108 104, 108 108 C 108 112, 105 115, 100 115 Z" 
+                                 dur="2s" repeatCount="indefinite"/>
+                    </path>
+                    
+                    <!-- Olho esquerdo -->
+                    <ellipse cx="80" cy="95" rx="8" ry="10" fill="#2c2c2c">
+                        <animate attributeName="ry" values="10;2;10" dur="5s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <circle cx="82" cy="93" r="3" fill="#fff" opacity="0.8"/>
+                    
+                    <!-- Olho direito -->
+                    <ellipse cx="120" cy="95" rx="8" ry="10" fill="#2c2c2c">
+                        <animate attributeName="ry" values="10;2;10" dur="5s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <circle cx="122" cy="93" r="3" fill="#fff" opacity="0.8"/>
+                    
+                    <!-- Sobrancelhas fofas -->
+                    <path d="M 70 85 Q 80 82 90 85" stroke="#d4a5b8" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+                    <path d="M 110 85 Q 120 82 130 85" stroke="#d4a5b8" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+                    
+                    <!-- Bochecha esquerda -->
+                    <circle cx="60" cy="112" r="15" fill="#ffb6d9" opacity="0.5">
+                        <animate attributeName="opacity" values="0.5;0.7;0.5" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    
+                    <!-- Bochecha direita -->
+                    <circle cx="140" cy="112" r="15" fill="#ffb6d9" opacity="0.5">
+                        <animate attributeName="opacity" values="0.5;0.7;0.5" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                    </circle>
+                    
+                    <!-- Sorriso fofo -->
+                    <path d="M 80 125 Q 100 135 120 125" stroke="#ff8eb3" stroke-width="3.5" fill="none" stroke-linecap="round">
+                        <animate attributeName="d" 
+                                 values="M 80 125 Q 100 135 120 125;
+                                         M 80 125 Q 100 137 120 125;
+                                         M 80 125 Q 100 135 120 125" 
+                                 dur="4s" repeatCount="indefinite"/>
+                    </path>
+                    
+                    <!-- Bigodes -->
+                    <line x1="45" y1="115" x2="75" y2="113" stroke="#d4a5b8" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                    <line x1="45" y1="120" x2="75" y2="120" stroke="#d4a5b8" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                    <line x1="155" y1="115" x2="125" y2="113" stroke="#d4a5b8" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                    <line x1="155" y1="120" x2="125" y2="120" stroke="#d4a5b8" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                    
+                    <!-- Mini coração flutuante -->
+                    <g opacity="0.8">
+                        <path d="M 100 45 L 102 47 L 100 49 L 98 47 Z" fill="#ff6b9d">
+                            <animateTransform attributeName="transform" type="translate" 
+                                              values="0,0; 0,-10; 0,0" 
+                                              dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                </svg>
+                
+                <span class="sparkle">✨</span>
+                <span class="sparkle">✨</span>
+                <span class="sparkle">💫</span>
+                <span class="sparkle">⭐</span>
+            </div>
+            
+            <h1>Laura</h1>
+            
+            <div class="subtitle">Uma mensagem especial</div>
+            
+            <div class="divider"></div>
+            
+            <div class="message">
+                <p>Estava aqui sem nada para fazer...</p>
+                <p>E então pensei: <span class="highlight">por que não criar algo especial para você?</span></p>
+                <p>Porque eu te amo profundamente, Laura.</p>
+                <p>E quero sempre fazer de tudo</p>
+                <p><span class="highlight">para ver você bem e feliz.</span></p>
+            </div>
+            
+            <div class="hearts-container">
+                <span class="heart">💗</span>
+                <span class="heart">💖</span>
+                <span class="heart">💕</span>
+            </div>
+            
+            <div class="footer">
+                <div class="footer-text">Durma bem, meu amor</div>
+                <div class="moon-stars">🌙 ✨</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Canvas de fundo animado com partículas
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            
+            draw() {
+                ctx.fillStyle = `rgba(255, 182, 217, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            // Conexões entre partículas próximas
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(255, 182, 217, ${0.1 * (1 - distance / 100)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // Criar partículas de luz flutuantes
+        function createLightParticles() {
+            const body = document.body;
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'light-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.bottom = '-50px';
+                particle.style.width = Math.random() * 60 + 30 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+                particle.style.setProperty('--ty', -(Math.random() * window.innerHeight + 200) + 'px');
+                particle.style.animationDuration = (Math.random() * 15 + 15) + 's';
+                body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 20000);
+            }, 2000);
+        }
+        
+        createLightParticles();
+    </script>
+</body>
+</html>
